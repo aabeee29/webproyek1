@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Commerce Produk Khas Indramayu</title>
+  <style>
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff8f0;
+      color: #333;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    button {
+      cursor: pointer;
+    }
+
+    /* Colors */
+    :root {
+      --primary-color: #ef6c00; /* Warm orange */
+      --primary-alt: #f57c00;
+      --secondary-color: #3e2723; /* Dark brown */
+      --accent-color: #ffccbc; /* Light peach */
+      --background: #fff8f0;
+      --shadow-color: rgba(239, 108, 0, 0.3);
+
+      /* Category colors */
+      --cat-mangga: #2e7d32; /* Dark green for Mangga */
+      --cat-olahan-mangga: #f9a825; /* Amber for Olahan Mangga */
+      --cat-kerupuk: #ef6c00; /* Orange for Kerupuk */
+      --cat-terasi: #6d4c41; /* Brown for Terasi */
+      --cat-lainnya: #00796b; /* Teal for others */
+    }
+
+    /* Header */
+    header {
+      background: var(--primary-color);
+      color: white;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px var(--shadow-color);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav a {
+      margin-left: 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1570006152575-531320e7c89b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center/cover;
+      height: 340px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+    }
+    .hero-content {
+      background: rgba(62, 39, 35, 0.7);
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      max-width: 720px;
+      text-align: center;
+    }
+    .hero-content h2 {
+      font-size: 2.75rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+    .hero-content p {
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    /* Product Grid */
+    main {
+      max-width: 1200px;
+      margin: 0 auto 4rem auto;
+      padding: 0 1rem;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(239, 108, 0, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      border: 4px solid transparent;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(239, 108, 0, 0.25);
+    }
+    .product-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-bottom: 4px solid var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-image {
+      transform: scale(1.05);
+    }
+    .product-info {
+      padding: 1.2rem 1.5rem 2rem 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--secondary-color);
+      text-transform: capitalize;
+    }
+    .product-description {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .product-price {
+      font-size: 1.15rem;
+      color: var(--primary-alt);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .add-to-cart-btn {
+      background: var(--primary-color);
+      border: none;
+      border-radius: 35px;
+      padding: 0.55rem 1.3rem;
+      font-weight: 600;
+      color: white;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px var(--shadow-color);
+      transition: background-color 0.3s ease;
+      align-self: flex-start;
+      user-select: none;
+    }
+    .add-to-cart-btn:hover {
+      background: var(--primary-alt);
+    }
+
+    /* Category border colors */
+    .category-mangga {
+      border-color: var(--cat-mangga);
+    }
+    .category-olahan-mangga {
+      border-color: var(--cat-olahan-mangga);
+    }
+    .category-kerupuk {
+      border-color: var(--cat-kerupuk);
+    }
+    .category-terasi {
+      border-color: var(--cat-terasi);
+    }
+    .category-lainnya {
+      border-color: var(--cat-lainnya);
+    }
+
+    /* Category Badge */
+    .category-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--primary-color);
+      color: white;
+      padding: 3px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 12px;
+      text-transform: uppercase;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      opacity: 0.9;
+      pointer-events: none;
+      transition: background-color 0.3s ease;
+    }
+    /* badge colors per category for better distinct */
+    .category-mangga .category-badge {
+      background-color: var(--cat-mangga);
+    }
+    .category-olahan-mangga .category-badge {
+      background-color: var(--cat-olahan-mangga);
+    }
+    .category-kerupuk .category-badge {
+      background-color: var(--cat-kerupuk);
+    }
+    .category-terasi .category-badge {
+      background-color: var(--cat-terasi);
+    }
+    .category-lainnya .category-badge {
+      background-color: var(--cat-lainnya);
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar {
+      position: fixed;
+      right: 0;
+      top: 72px;
+      width: 320px;
+      max-height: calc(100vh - 72px);
+      background: white;
+      border-left: 3px solid var(--primary-color);
+      box-shadow: -4px 0 12px rgba(239, 108, 0, 0.15);
+      padding: 1rem 1.5rem;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+    }
+    .cart-sidebar.open {
+      transform: translateX(0);
+    }
+    .cart-header {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    .cart-item-name {
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+    .cart-item-qty {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 0 0.5rem;
+    }
+    .cart-item-price {
+      font-weight: 600;
+      color: var(--primary-alt);
+    }
+    .cart-footer {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--primary-color);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary-color);
+      text-align: right;
+    }
+    .cart-empty {
+      font-style: italic;
+      color: #999;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .checkout-btn {
+      background: var(--primary-alt);
+      border: none;
+      border-radius: 35px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      color: white;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 15px rgba(239, 108, 0, 0.45);
+      margin-top: 1rem;
+      user-select: none;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    .checkout-btn:hover {
+      background: var(--primary-color);
+    }
+
+    /* About Section */
+    #about {
+      max-width: 800px;
+      margin: 3rem auto 6rem auto;
+      padding: 1rem 1rem 2rem 1rem;
+      background-color: #fff3e0;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(239, 108, 0, 0.12);
+      font-size: 1rem;
+      color: var(--secondary-color);
+      line-height: 1.5;
+    }
+    #about h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    #about p {
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+
+    /* Checkout form overlay */
+    #checkout-overlay {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    #checkout-overlay.active {
+      display: flex;
+    }
+    #checkout-form-container {
+      background: white;
+      max-width: 400px;
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      padding: 2rem 2rem 3rem 2rem;
+      position: relative;
+    }
+    #checkout-form-container h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    #checkout-form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: var(--secondary-color);
+      font-size: 0.95rem;
+    }
+    #checkout-form input, #checkout-form textarea, #checkout-form select {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 7px;
+      font-size: 1rem;
+      resize: vertical;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+    #checkout-form input:focus, #checkout-form textarea:focus, #checkout-form select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 6px var(--primary-color);
+    }
+    #checkout-submit-btn {
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      padding: 0.75rem 1.2rem;
+      border-radius: 35px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    #checkout-submit-btn:hover {
+      background: var(--primary-alt);
+    }
+    #checkout-cancel-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #666;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    #checkout-cancel-btn:hover {
+      color: var(--primary-color);
+    }
+    #confirmation-message {
+      text-align: center;
+      color: var(--secondary-color);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.25rem;
+      }
+      nav a {
+        margin-left: 1rem;
+        font-size: 0.9rem;
+      }
+      .hero-content h2 {
+        font-size: 1.8rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      .cart-sidebar {
+        width: 100%;
+        top: 56px;
+        max-height: calc(100vh - 56px);
+        position: fixed;
+        right: 0;
+      }
+      #checkout-form-container {
+        max-width: 95vw;
+      }
+      #about {
+        margin: 2rem 1rem 4rem 1rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Indramayu Shop</h1>
+    <nav>
+      <a href="#products">Produk</a>
+      <a href="#cart" id="cart-nav-link">Keranjang</a>
+      <a href="#about">Tentang</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="Hero Section">
+    <div class="hero-content">
+      <h2>Produk Khas Indramayu</h2>
+      <p>Nikmati cita rasa autentik dan kualitas terbaik dari Produk Lokal Indramayu.</p>
+    </div>
+  </section>
+
+  <main id="products" aria-label="Product Listing">
+    <div class="products-grid" id="products-grid">
+      <!-- Product cards will be inserted here by JS -->
+    </div>
+  </main>
+
+  <section id="about" aria-label="Tentang Produk dan Website">
+    <h2>Tentang Produk Khas Indramayu & Website Ini</h2>
+    <p>
+      Indramayu terkenal dengan beragam produk khas yang kaya akan cita rasa dan tradisi lokal. Mulai dari mangga gedong gincu yang manis legit, olahan mangga seperti dodol, manisan, dan asinan, hingga kerupuk yang renyah dan terasi autentik. Produk-produk ini tidak hanya menyajikan keunikan rasa, tetapi juga menjadi bagian penting dari budaya dan ekonomi masyarakat Indramayu.
+    </p>
+    <p>
+      Website ini dibuat dengan tujuan memudahkan konsumen dalam menjelajahi dan membeli produk-produk khas Indramayu secara online. Dengan desain yang menarik dan mudah digunakan, kami ingin membantu pelaku usaha lokal memperluas pasar mereka dan mempromosikan kekayaan kuliner serta hasil bumi Indramayu ke seluruh penjuru Indonesia.
+    </p>
+  </section>
+
+  <button class="cart-toggle-btn" id="cart-toggle" aria-label="Toggle Cart">
+    🛒 <span class="cart-badge" id="cart-count">0</span>
+  </button>
+
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Shopping Cart">
+    <div class="cart-header">Keranjang Belanja</div>
+    <div id="cart-items">
+      <p class="cart-empty">Keranjang Anda masih kosong.</p>
+    </div>
+    <div class="cart-footer" id="cart-total">Total: Rp 0</div>
+    <button class="checkout-btn" id="checkout-btn" aria-label="Checkout sekarang">Checkout</button>
+    <div id="checkout-description" style="margin-top:10px; font-size:0.9rem; color:#666; font-style: italic; text-align:center;">
+      Lengkapi informasi pengiriman, kontak, dan pilihan pembayaran Anda setelah klik checkout.
+    </div>
+  </aside>
+
+  <!-- Checkout Overlay and form -->
+  <div id="checkout-overlay" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+    <div id="checkout-form-container">
+      <button id="checkout-cancel-btn" aria-label="Batalkan checkout">&times;</button>
+      <h3 id="checkout-title">Formulir Checkout</h3>
+      <form id="checkout-form" novalidate>
+        <label for="name-input">Nama Lengkap <span aria-hidden="true" style="color:#d84315;">*</span></label>
+        <input type="text" id="name-input" name="name" required placeholder="Nama Anda" />
+
+        <label for="address-input">Alamat Pengiriman <span aria-hidden="true" style="color:#d84315;">*</span></label>
+        <textarea id="address-input" name="address" required rows="3" placeholder="Alamat lengkap pengiriman"></textarea>
+
+        <label for="phone-input">Nomor Telepon <span aria-hidden="true" style="color:#d84315;">*</span></label>
+        <input type="tel" id="phone-input" name="phone" required placeholder="Contoh: 081234567890" pattern="^08[0-9]{8,12}$" />
+        
+        <label for="payment-select">Opsi Pembayaran <span aria-hidden="true" style="color:#d84315;">*</span></label>
+        <select name="payment" id="payment-select" required>
+          <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
+          <option value="Transfer Bank">Transfer Bank</option>
+          <option value="Cash on Delivery (COD)">Cash on Delivery (COD)</option>
+          <option value="E-Wallet">E-Wallet (OVO, GoPay, Dana)</option>
+        </select>
+
+        <label for="shipping-select">Opsi Pengiriman <span aria-hidden="true" style="color:#d84315;">*</span></label>
+        <select name="shipping" id="shipping-select" required>
+          <option value="" disabled selected>-- Pilih Metode Pengiriman --</option>
+          <option value="JNE">JNE (Reguler, OKE, YES)</option>
+          <option value="J&T Express">J&T Express</option>
+          <option value="GoSend">GoSend (Same day delivery)</option>
+          <option value="Ambil di Toko">Ambil di Toko (Pickup)</option>
+        </select>
+
+        <label for="notes-input">Catatan Tambahan</label>
+        <textarea id="notes-input" name="notes" rows="2" placeholder="Permintaan khusus, jika ada"></textarea>
+
+        <button type="submit" id="checkout-submit-btn">Kirim Pesanan</button>
+      </form>
+      <p id="confirmation-message" role="alert" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: 'Mangga gedong gincu',
+        description: 'Mangga khas indramayu dengan cita rasa manis.',
+        price: 25000,
+        category: 'mangga',
+        image: 'mangga.jpeg'
+      },
+      {
+        id: 2,
+        name: 'Dodol Mangga',
+        description: 'Dodol mangga jajanan khas Indramayu yang terbuat dari buah mangga segar, dengan rasa yang khas, legit, dan manis.',
+        price: 15000,
+        category: 'Olahan Mangga',
+        image: 'dodol.jpg'
+      },
+      {
+        id: 3,
+        name: 'Emping Melinjo',
+        description: 'Emping dari biji melinjo pilihan yang renyah dan tradisional.',
+        price: 15000,
+        category: 'lainnya',
+        image: 'emping melinjo.jpeg'
+      },
+      {
+        id: 4,
+        name: 'Gula Aren Organik',
+        description: 'Gula aren murni yang tumbuh alami di wilayah Indramayu, manis alami.',
+        price: 30000,
+        category: 'lainnya',
+        image: 'gula aren.jpeg'
+      },
+      {
+        id: 5,
+        name: 'Kerupuk udang',
+        description: 'Kerupuk udang dengan kualitas super.',
+        price: 10000,
+        category: 'Kerupuk',
+        image: 'kerupuk udang.jpeg'
+      },
+      {
+        id: 6,
+        name: 'Kerupuk Kulit Ikan',
+        description: 'Kerupuk kulit ikan tenggiri yang dijamin renyah dan enak.',
+        price: 15000,
+        category: 'kerupuk',
+        image: 'kerupuk kulit ikan.jpeg'
+      },
+      {
+        id: 7,
+        name: 'Terasi',
+        description: 'Terasi udang yang menjadi ciri khas oleh-oleh dari Indramayu.',
+        price: 10000,
+        category: 'Terasi',
+        image: 'Terasi.jpeg'
+      },
+      {
+        id: 8,
+        name: 'Dodol Mangga',
+        description: 'Olahan dodol manis dari mangga gedong gincu pilihan, legit dan khas.',
+        price: 28000,
+        category: 'olahan-mangga',
+        image: 'dodol.jpg'
+      },
+      {
+        id: 9,
+        name: 'Manisan Mangga',
+        description: 'Manisan mangga renyah dengan rasa manis asam segar khas Indramayu.',
+        price: 22000,
+        category: 'olahan-mangga',
+        image: 'Manisan Mangga.jpeg'
+      },
+      {
+        id: 10,
+        name: 'Asinan Mangga',
+        description: 'Asinan mangga segar pedas dan manis, cemilan khas Indramayu yang menggoda.',
+        price: 20000,
+        category: 'olahan-mangga',
+        image: 'Asinan Mangga.jpeg'
+      },
+      {
+        id: 11,
+        name: 'Kerupuk YeYe',
+        description: 'Kerupuk unik khas Indramayu, renyah dan gurih.',
+        price: 10000,
+        category: 'kerupuk',
+        image: 'kerupuk yeye.jpeg'
+      },
+      {
+        id: 12,
+        name: 'Terasi Udang',
+        description: 'Terasi asli Indramayu dengan aroma kuat dan rasa autentik melengkapi masakan.',
+        price: 32000,
+        category: 'terasi',
+        image: 'Terasi.jpeg'
+      },
+      {
+        id: 13,
+        name: 'Batik Paoman',
+        description: 'Batik Paoman merupakan batik khas Indramayu,',
+        price: 25000,
+        category: 'lainnya',
+        image: 'batik.jpg'
+      }
+    ];
+
+    // State for cart
+    let cart = {};
+
+    // Format number as rupiah currency
+    function formatRupiah(number){
+      return 'Rp ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    // Map category to friendly display names for badges
+    const categoryDisplayNames = {
+      'mangga': 'Mangga',
+      'olahan-mangga': 'Olahan Mangga',
+      'kerupuk': 'Kerupuk',
+      'terasi': 'Terasi',
+      'lainnya': 'Lainnya',
+    };
+
+    // Render products grid with category classes and badges
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = '';
+      products.forEach(product => {
+        const categoryClass = 'category-' + (product.category || 'lainnya');
+        const displayCategory = categoryDisplayNames[product.category] || 'Lainnya';
+
+        const card = document.createElement('article');
+        card.className = `product-card ${categoryClass}`;
+        card.setAttribute('tabindex', '0');
+        card.innerHTML = `
+          <div class="category-badge">${displayCategory}</div>
+          <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" />
+          <div class="product-info">
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-description">${product.description}</p>
+            <div class="product-price">${formatRupiah(product.price)}</div>
+            <button class="add-to-cart-btn" aria-label="Tambah ${product.name} ke keranjang" data-id="${product.id}">Tambah ke Keranjang</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Render cart items UI
+    function renderCart() {
+      const cartItemsContainer = document.getElementById('cart-items');
+      const cartCount = document.getElementById('cart-count');
+      const cartTotalEl = document.getElementById('cart-total');
+
+      // Clear previous
+      cartItemsContainer.innerHTML = '';
+
+      const ids = Object.keys(cart);
+      if (ids.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="cart-empty">Keranjang Anda masih kosong.</p>';
+        cartCount.textContent = 0;
+        cartTotalEl.textContent = 'Total: Rp 0';
+        return;
+      }
+
+      let totalPrice = 0;
+      ids.forEach(id => {
+        const product = products.find(p => p.id === parseInt(id));
+        const quantity = cart[id];
+        const totalItemPrice = product.price * quantity;
+        totalPrice += totalItemPrice;
+
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+          <div>
+            <span class="cart-item-name">${product.name}</span>
+            <span class="cart-item-qty">x${quantity}</span>
+          </div>
+          <div>
+            <span class="cart-item-price">${formatRupiah(totalItemPrice)}</span>
+            <button aria-label="Kurangi satu ${product.name} dari keranjang" data-id="${id}" class="remove-one-btn" style="background:none;border:none;color:#d84315; font-weight:bold; margin-left:10px; cursor:pointer;">-&nbsp;</button>
+            <button aria-label="Tambah satu ${product.name} ke keranjang" data-id="${id}" class="add-one-btn" style="background:none;border:none;color:#2e7d32; font-weight:bold; cursor:pointer;">+&nbsp;</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(cartItem);
+      });
+      cartCount.textContent = ids.reduce((acc, id) => acc + cart[id], 0);
+      cartTotalEl.textContent = 'Total: ' + formatRupiah(totalPrice);
+    }
+
+    // Add product to cart handler
+    function addToCart(productId) {
+      if (cart[productId]) {
+        cart[productId]++;
+      } else {
+        cart[productId] = 1;
+      }
+      renderCart();
+    }
+    // Remove one product from cart
+    function removeOneFromCart(productId) {
+      if (!cart[productId]) return;
+      if (cart[productId] <= 1) {
+        delete cart[productId];
+      } else {
+        cart[productId]--;
+      }
+      renderCart();
+    }
+    // Add one product in cart
+    function addOneToCart(productId) {
+      if (!cart[productId]) return;
+      cart[productId]++;
+      renderCart();
+    }
+
+    // Toggle cart sidebar
+    function toggleCart() {
+      const cartSidebar = document.getElementById('cart-sidebar');
+      cartSidebar.classList.toggle('open');
+    }
+
+    // Show checkout form overlay
+    function showCheckoutForm() {
+      const checkoutOverlay = document.getElementById('checkout-overlay');
+      const confirmationMessage = document.getElementById('confirmation-message');
+      confirmationMessage.textContent = '';
+      checkoutOverlay.classList.add('active');
+      // Focus first input for better accessibility
+      document.getElementById('name-input').focus();
+    }
+    // Hide checkout form overlay
+    function hideCheckoutForm() {
+      const checkoutOverlay = document.getElementById('checkout-overlay');
+      checkoutOverlay.classList.remove('active');
+    }
+
+    // Clear cart
+    function clearCart() {
+      cart = {};
+      renderCart();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      renderCart();
+
+      // Add to cart buttons
+      document.getElementById('products-grid').addEventListener('click', e => {
+        if(e.target.classList.contains('add-to-cart-btn')){
+          const id = e.target.getAttribute('data-id');
+          addToCart(id);
+          // Open cart sidebar on add
+          const cartSidebar = document.getElementById('cart-sidebar');
+          if(!cartSidebar.classList.contains('open')){
+            toggleCart();
+          }
+        }
+      });
+
+      // Cart sidebar buttons
+      document.getElementById('cart-items').addEventListener('click', e => {
+        if (e.target.classList.contains('remove-one-btn')){
+          const id = e.target.getAttribute('data-id');
+          removeOneFromCart(id);
+        }
+        if (e.target.classList.contains('add-one-btn')){
+          const id = e.target.getAttribute('data-id');
+          addOneToCart(id);
+        }
+      });
+
+      // Cart toggle button
+      document.getElementById('cart-toggle').addEventListener('click', toggleCart);
+
+      // Checkout button
+      document.getElementById('checkout-btn').addEventListener('click', () => {
+        if(Object.keys(cart).length === 0){
+          alert('Keranjang Anda kosong! Tambahkan produk terlebih dahulu.');
+          return;
+        }
+        showCheckoutForm();
+      });
+
+      // Checkout cancel button
+      document.getElementById('checkout-cancel-btn').addEventListener('click', hideCheckoutForm);
+
+      // Checkout form submit
+      document.getElementById('checkout-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const form = e.target;
+        const confirmationMessage = document.getElementById('confirmation-message');
+
+        // Basic validation
+        if(!form.name.value.trim() || !form.address.value.trim() || !form.phone.value.trim() ||
+           !form.payment.value || !form.shipping.value){
+          confirmationMessage.style.color = '#d84315';
+          confirmationMessage.textContent = 'Harap lengkapi semua kolom wajib (*) dengan benar.';
+          return;
+        }
+        // Validate phone pattern (Indonesian mobile phone starting with 08, length 10-14 digits roughly)
+        if(!/^08[0-9]{8,12}$/.test(form.phone.value.trim())){
+          confirmationMessage.style.color = '#d84315';
+          confirmationMessage.textContent = 'Nomor telepon tidak valid, harus diawali dengan 08 dan nomor lengkap.';
+          return;
+        }
+
+        // Simulate order submission with details
+        confirmationMessage.style.color = 'var(--secondary-color)';
+        confirmationMessage.innerHTML =
+          'Terima kasih atas pesanan Anda, <strong>' + form.name.value.trim() + '</strong>!<br>' +
+          'Pesanan akan dikirim menggunakan <em>' + form.shipping.value + '</em> dan pembayaran via <em>' + form.payment.value + '</em>.<br>' +
+          'Pesanan akan segera diproses.';
+
+        // Clear cart and reset form after delay
+        clearCart();
+        form.reset();
+
+        setTimeout(() => {
+          confirmationMessage.textContent = '';
+          hideCheckoutForm();
+        }, 6000);
+      });
+
+      // Smooth scroll to sections when nav links clicked
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const href = link.getAttribute('href');
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+          // Close cart sidebar if 'Keranjang' clicked and sidebar visible
+          if(href === '#cart'){
+            const cartSidebar = document.getElementById('cart-sidebar');
+            if(!cartSidebar.classList.contains('open')){
+              toggleCart();
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
